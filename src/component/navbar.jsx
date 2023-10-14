@@ -14,6 +14,7 @@ const Navbar = () => {
         Cookies.remove("username");
         localStorage.removeItem("token");
         localStorage.removeItem("username");
+        localStorage.removeItem("cartItems");
         window.location.reload();
     };
 
