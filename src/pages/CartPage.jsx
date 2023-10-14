@@ -28,21 +28,21 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
-        if (!userID) {
-            alert('Please log in to place an order.');
-            return;
-        }
+
+        const cookie  = Cookies.get('userID');
         const requestBody = {
             userID: userID,
             cartItems: cartItems,
             totalPrice: calculateTotalPrice(),
         };
+
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `${import.meta.env.VITE_API}/order`, true);
+        xhr.open('POST', `${import.meta.env.VITE_API}/order` , true);
         xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.setRequestHeader('Authorization', cookie);
 
         xhr.onload = function () {
-            if (xhr.status === 200) {
+            if (xhr.status === 200 || this.readyState === 4) {
                 localStorage.removeItem('cartItems');
                 alert('Order placed successfully!');
                 setCartItems([]);
