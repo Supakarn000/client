@@ -1,0 +1,38 @@
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .product {
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .product img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .product h2 {
+    font-size: 1.5rem;
+    margin: 10px 0;
+  }
+  
+  .product p {
+    font-size: 1rem;
+    color: #666;
+    margin: 10px 0;
+  }
+  
+  .product span {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
