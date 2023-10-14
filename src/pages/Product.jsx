@@ -106,6 +106,7 @@ const Product = () => {
                                     <h5 className="card-title">{product.name}</h5>
                                     <h8 className="card-text">{product.description}</h8>
                                     <p className="card-price">{product.price} ฿</p>
+                                    <p className="card-stock">{product.instock} in stock left</p>
                                     <button
                                         className="btn btn-dark"
                                         data-bs-toggle="modal"

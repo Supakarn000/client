@@ -15,7 +15,6 @@ const Profile = () => {
         const token = localStorage.getItem("token");
         const userID = Cookies.get('userID');
     
-        // Fetch user data
         const userDataXHR = new XMLHttpRequest();
         userDataXHR.open('GET', import.meta.env.VITE_API + '/profile', true);
         userDataXHR.setRequestHeader('Authorization', userID);
@@ -35,7 +34,6 @@ const Profile = () => {
     
         userDataXHR.send();
     
-        // Fetch order history
         const orderHistoryXHR = new XMLHttpRequest();
         orderHistoryXHR.open('GET', import.meta.env.VITE_API + '/orderhistory', true);
         orderHistoryXHR.setRequestHeader('Authorization', userID);
@@ -50,13 +48,11 @@ const Profile = () => {
             setOrderHistory(ordersWithParsedCartItems);
             setIsLoading(false);
           } else {
-            console.error('Error fetching order history:', orderHistoryXHR.statusText);
             setIsLoading(false);
           }
         };
     
         orderHistoryXHR.onerror = function () {
-          console.error('Error fetching order history:', orderHistoryXHR.statusText);
           setIsLoading(false);
         };
     
@@ -69,8 +65,7 @@ const Profile = () => {
             <div className="cart-item-details">
                 <h3>{cartItem.name}</h3>
                 <p>Description: {cartItem.description}</p>
-                <p>Price: ${cartItem.price}</p>
-                <p>In Stock: {cartItem.instock}</p>
+                <p>Price: ฿{cartItem.price}</p>
             </div>
         </div>
     );
