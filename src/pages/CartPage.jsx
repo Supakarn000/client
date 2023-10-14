@@ -28,14 +28,17 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
+        if (!userID) {
+            alert('Please log in to place an order.');
+            return;
+        }
         const requestBody = {
             userID: userID,
             cartItems: cartItems,
             totalPrice: calculateTotalPrice(),
         };
-
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', import.meta.env.VITE_API + "/order", true);
+        xhr.open('POST', `${import.meta.env.VITE_API}/order`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
 
         xhr.onload = function () {
