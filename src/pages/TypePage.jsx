@@ -48,7 +48,7 @@ const TypePage = ({ productType }) => {
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
             navigate('/cart');
         } else {
-            console.log("User is not logged in");
+            console.log("User is not login");
         }
     };
 
@@ -105,7 +105,7 @@ const TypePage = ({ productType }) => {
             </div>
         ));
     };
-
+    //main return
     return (
         <div>
             <Navbar />

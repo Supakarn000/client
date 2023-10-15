@@ -25,6 +25,7 @@ const Login = () => {
 
                 localStorage.setItem("token", token);
                 localStorage.setItem("username", username);
+                console.log(data);
                 Cookies.set("userID", userId, { expires: 7 });
                 Cookies.set("username", username);
 

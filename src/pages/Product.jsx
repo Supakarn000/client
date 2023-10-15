@@ -26,12 +26,8 @@ const Product = () => {
                     setProducts(data);
                     setFilteredProducts(data);
                 } else {
-                    console.error(`HTTP Error! Status: ${xhr.status}`);
+                    console.error(`${xhr.status}`);
                 }
-            };
-
-            xhr.onerror = function () {
-                console.error('Error fetching products');
             };
 
             xhr.send();

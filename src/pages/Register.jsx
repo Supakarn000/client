@@ -21,7 +21,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
-      console.error('Please fill in all fields');
+      alert('Please fill in all fields');
       return;
     }
 
@@ -31,15 +31,15 @@ const Register = () => {
 
     xhr.onload = function () {
       if (xhr.status === 200) {
-        console.log('Registration successful');
+        console.log('Register Success');
         navigate('/login');
       } else {
-        console.error('Registration failed');
+        console.error('Register Fail');
       }
     };
 
     xhr.onerror = function () {
-      console.error('Registration failed');
+      console.error('Register Fail');
     };
 
     xhr.send(JSON.stringify(formData));
@@ -62,7 +62,7 @@ const Register = () => {
         <input type="email" id="email" name="email"  placeholder="name@gmail.com" value={formData.email} onChange={handleChange} /><br />
 
         <label htmlFor="password">Password</label><br />
-        <input type="password" id="password" name="password" placeholder="At least 8 characters" value={formData.password} onChange={handleChange} pattern="^[A-Z].{7,}$"/><br />
+        <input type="password" id="password" name="password" placeholder="Req One Upper and At least 8 characters" value={formData.password} onChange={handleChange} pattern="^[A-Z].{7,}$"/><br />
 
         <button type="submit">Register</button>
       </form>

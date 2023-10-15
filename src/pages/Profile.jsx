@@ -24,12 +24,12 @@ const Profile = () => {
             const data = JSON.parse(userDataXHR.responseText);
             setUserData(data);
           } else {
-            console.error('Error fetching user data:', userDataXHR.statusText);
+            console.error("error");
           }
         };
     
         userDataXHR.onerror = function () {
-          console.error('Error fetching user data:', userDataXHR.statusText);
+          console.error("error");
         };
     
         userDataXHR.send();
@@ -91,13 +91,11 @@ const Profile = () => {
             setUpdateSuccess(true);
             setAddressFormVisible(false);
           } else {
-            console.error('Error updating address:', xhr.statusText);
             setUpdateSuccess(false);
           }
         };
     
         xhr.onerror = function () {
-          console.error('Error updating address:', xhr.statusText);
           setUpdateSuccess(false);
         };
     

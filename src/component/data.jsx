@@ -33,7 +33,7 @@ const Data = () => {
           const responseData = JSON.parse(xhr.responseText);
           setData2(responseData);
         } else {
-          console.error("Failed to fetch data");
+          console.error("Error ftech data");
         }
       };
 

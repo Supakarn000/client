@@ -21,12 +21,12 @@ const Home = () => {
           const data = JSON.parse(xhr.responseText);
           setCenterCardData(data);
         } else {
-          console.error(`HTTP Error! Status: ${xhr.status}`);
+          console.error(`${xhr.status}`);
         }
       };
 
       xhr.onerror = function () {
-        console.error("Error fetching product data");
+        console.error("error fetch data");
       };
 
       xhr.send();
@@ -45,12 +45,12 @@ const Home = () => {
           const data = JSON.parse(xhr.responseText);
           setLeftCardData(data);
         } else {
-          console.error(`HTTP Error! Status: ${xhr.status}`);
+          console.error(`${xhr.status}`);
         }
       };
 
       xhr.onerror = function () {
-        console.error("Error fetching product data");
+        console.error("Error fetch data");
       };
 
       xhr.send();
@@ -69,12 +69,12 @@ const Home = () => {
           const data = JSON.parse(xhr.responseText);
           setRightCardData(data);
         } else {
-          console.error(`HTTP Error! Status: ${xhr.status}`);
+          console.error(`${xhr.status}`);
         }
       };
 
       xhr.onerror = function () {
-        console.error("Error fetching product data");
+        console.error("Error fetch data");
       };
 
       xhr.send();
