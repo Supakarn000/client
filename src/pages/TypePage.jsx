@@ -7,38 +7,38 @@ import Cookies from 'js-cookie';
 const TypePage = ({ productType }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [search, setSearch] = useState('');
+    const [filterProducts, setFilterProducts] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        //const token = localStorage.getItem('token');
         const cookie = Cookies.get('userID');
         setIsLoggedIn(!!cookie);
 
-        const fetchByType = () => {
+        const fetchproduct = () => {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', import.meta.env.VITE_API + `/products?type=${productType}`, true);
             xhr.onreadystatechange = function () {
-            const data = JSON.parse(xhr.responseText);
-            setProducts(data);
-            setFilteredProducts(data);
-            setLoading(false);
+                const data = JSON.parse(xhr.responseText);
+                setProducts(data);
+                setFilterProducts(data);
+                setLoading(false);
             };
             xhr.send();
         };
 
-        fetchByType();
+        fetchproduct();
     }, [productType]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
-        setSearchQuery(query);
-        const filtered = products.filter((product) =>
+        setSearch(query);
+        const filter = products.filter((product) =>
             product.name.toLowerCase().includes(query.toLowerCase())
         );
-        setFilteredProducts(filtered);
+        setFilterProducts(filter);
     };
 
     const handleOrderClick = (product) => {
@@ -48,20 +48,20 @@ const TypePage = ({ productType }) => {
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
             navigate('/cart');
         } else {
-            console.log("User is not login");
+            alert("user not login")
         }
     };
 
     const renderProductCards = () => {
         if (loading) {
-            return <p>Loading...</p>;
+            return <p>Loading</p>;
         }
 
-        if (filteredProducts.length === 0) {
-            return <p>No products found for {productType}.</p>;
+        if (filterProducts.length === 0) {
+            return <p>No products found</p>;
         }
 
-        return filteredProducts.map((product) => (
+        return filterProducts.map((product) => (
             <div className="col" key={product.productID}>
                 <div className="card h-100">
                     {product.image && (
@@ -77,9 +77,8 @@ const TypePage = ({ productType }) => {
                             data-bs-toggle="modal"
                             data-bs-target={`#orderModal${product.productID}`}
                             disabled={!isLoggedIn}
-                        >
-                            Order
-                        </button>
+                            title={!isLoggedIn ? "You must be logged in to place an order" : ""}
+                        >Order</button>
 
                         <div className="modal fade" id={`orderModal${product.productID}`} tabIndex="-1" aria-labelledby={`orderModalLabel${product.productID}`} aria-hidden="true">
                             <div className="modal-dialog modal-dialog-centered">
@@ -115,7 +114,7 @@ const TypePage = ({ productType }) => {
                         type="text"
                         className="form-control"
                         placeholder="Search by product name"
-                        value={searchQuery}
+                        value={search}
                         onChange={handleSearchChange}
                     />
                 </div>

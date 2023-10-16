@@ -7,7 +7,7 @@ import Cookies from 'js-cookie';
 const Product = () => {
     const [products, setProducts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [filterProducts, setFilterProducts] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -24,7 +24,7 @@ const Product = () => {
                 if (xhr.status === 200) {
                     const data = JSON.parse(xhr.responseText);
                     setProducts(data);
-                    setFilteredProducts(data);
+                    setFilterProducts(data);
                 } else {
                     console.error(`${xhr.status}`);
                 }
@@ -43,7 +43,7 @@ const Product = () => {
         const filtered = products.filter((product) =>
             product.name.toLowerCase().includes(query.toLowerCase())
         );
-        setFilteredProducts(filtered);
+        setFilterProducts(filtered);
     };
 
     const handleOrderClick = (product) => {
@@ -81,7 +81,7 @@ const Product = () => {
                     />
                 </div>
                 <div className="row row-cols-1 row-cols-md-4 g-4">
-                    {filteredProducts.map((product) => (
+                    {filterProducts.map((product) => (
                         <div
                             className="col"
                             key={product.productID}

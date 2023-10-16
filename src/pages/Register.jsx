@@ -34,12 +34,12 @@ const Register = () => {
         console.log('Register Success');
         navigate('/login');
       } else {
-        console.error('Register Fail');
+        alert('Register Fail');
       }
     };
 
     xhr.onerror = function () {
-      console.error('Register Fail');
+      alert('Register Fail');
     };
 
     xhr.send(JSON.stringify(formData));

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../component/navbar';
 import './Profile.css';
 import Cookies from 'js-cookie';
+import { text } from '@fortawesome/fontawesome-svg-core';
 
 const Profile = () => {
     const [userData, setUserData] = useState(null);
@@ -14,52 +15,53 @@ const Profile = () => {
     useEffect(() => {
         const token = localStorage.getItem("token");
         const userID = Cookies.get('userID');
+        //profile
+        const userxhr = new XMLHttpRequest();
+        userxhr.open('GET', import.meta.env.VITE_API + '/profile', true);
+        userxhr.setRequestHeader('Authorization', userID);
     
-        const userDataXHR = new XMLHttpRequest();
-        userDataXHR.open('GET', import.meta.env.VITE_API + '/profile', true);
-        userDataXHR.setRequestHeader('Authorization', userID);
-    
-        userDataXHR.onload = function () {
-          if (userDataXHR.status === 200) {
-            const data = JSON.parse(userDataXHR.responseText);
+        userxhr.onload = function () {
+          if (userxhr.status === 200) {
+            const data = JSON.parse(userxhr.responseText);
             setUserData(data);
           } else {
-            console.error("error");
-          }
-        };
-    
-        userDataXHR.onerror = function () {
-          console.error("error");
-        };
-    
-        userDataXHR.send();
-    
-        const orderHistoryXHR = new XMLHttpRequest();
-        orderHistoryXHR.open('GET', import.meta.env.VITE_API + '/orderhistory', true);
-        orderHistoryXHR.setRequestHeader('Authorization', userID);
-    
-        orderHistoryXHR.onload = function () {
-          if (orderHistoryXHR.status === 200) {
-            const data = JSON.parse(orderHistoryXHR.responseText);
-            const ordersWithParsedCartItems = data.map((order) => ({
-              ...order,
-              cartItems: JSON.parse(order.cartItems),
-            }));
-            setOrderHistory(ordersWithParsedCartItems);
-            setIsLoading(false);
-          } else {
             setIsLoading(false);
           }
         };
     
-        orderHistoryXHR.onerror = function () {
+        userxhr.onerror = function () {
           setIsLoading(false);
         };
     
-        orderHistoryXHR.send();
+        userxhr.send();
+
+        //history
+        const historyxhr = new XMLHttpRequest();
+        historyxhr.open('GET', import.meta.env.VITE_API + '/orderhistory', true);
+        historyxhr.setRequestHeader('Authorization', userID);
+    
+        historyxhr.onload = function () {
+          if (historyxhr.status === 200) {
+            const data = JSON.parse(historyxhr.responseText);
+            const order = data.map((order) => ({
+              ...order,
+              cartItems: JSON.parse(order.cartItems),
+            }));
+            setOrderHistory(order);
+            setIsLoading(false);
+          } else {
+            setIsLoading(false);
+          }
+        };
+    
+        historyxhr.onerror = function () {
+          setIsLoading(false);
+        };
+    
+        historyxhr.send();
       }, []);
 
-    const renderCartItem = (cartItem) => (
+    const renderhistory = (cartItem) => (
         <div className="cart-item" key={cartItem.productID}>
             <img src={cartItem.image} alt={cartItem.name} />
             <div className="cart-item-details">
@@ -107,7 +109,7 @@ const Profile = () => {
             <Navbar />
             <h1>Profile Page</h1>
             {isLoading ? (
-                <p>Loading user data...</p>
+                <p>Loading user data</p>
             ) : (
                 userData ? (
                     <div className="user-info">
@@ -128,13 +130,13 @@ const Profile = () => {
                         )}
                     </div>
                 ) : (
-                    <p>Error loading user data.</p>
+                    <p>Error loading user data</p>
                 )
             )}
 
             <h2>Order History</h2>
             {isLoading ? (
-                <p>Loading order history...</p>
+                <p>Loading order history</p>
             ) : (
                 orderHistory.length > 0 ? (
                     <ul className="order-list">
@@ -144,7 +146,7 @@ const Profile = () => {
                                 <strong>Date:</strong> {order.orderDate}<br />
                                 <strong>Total:</strong> ${order.totalPrice}<br />
                                 <strong>Order Details:</strong>
-                                {order.cartItems.map(renderCartItem)}
+                                {order.cartItems.map(renderhistory)}
                             </li>
                         ))}
                     </ul>

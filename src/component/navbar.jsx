@@ -26,6 +26,13 @@ const Navbar = () => {
         event.target.style.color = '';
     };
 
+    const handleTipclick = () => {
+        const tipclick = document.getElementById("tip");
+        if (tipclick) {
+          tipclick.textContent = "Login to order products!!";
+        }
+    };
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
             <a className="navbar-brand" href="/">Home</a>
@@ -89,6 +96,17 @@ const Navbar = () => {
                             </a>
                         </li>
                     )}
+                        <li className="nav-item">
+                            <a
+                                className="nav-link"
+                                id='tip'
+                                onMouseEnter={handleTextMouseEnter}
+                                onMouseLeave={handleTextMouseLeave}
+                                onClick={handleTipclick}
+                            >
+                                Tip to buy Product
+                            </a>
+                        </li>
                 </ul>
 
                 {isLoggedIn && (
