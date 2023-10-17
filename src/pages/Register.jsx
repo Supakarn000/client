@@ -8,6 +8,7 @@ const Register = () => {
     email: '',
     password: '',
   });
+  const [check,setCheck] = useState(false)
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,9 +19,13 @@ const Register = () => {
     });
   };
 
+  const handleCheck = () => {
+    setCheck({True})
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.username || !formData.email || !formData.password) {
+    if (!formData.username || !formData.email || !formData.password || !check) {
       alert('Please fill in all fields');
       return;
     }
@@ -64,6 +69,7 @@ const Register = () => {
         <label htmlFor="password">Password</label><br />
         <input type="password" id="password" name="password" placeholder="Req One Upper and At least 8 characters" value={formData.password} onChange={handleChange} pattern="^[A-Z].{7,}$"/><br />
 
+        <input type="checkbox" id='check' name='check' value="check" onChange={handleCheck}/> <a href='https://web.facebook.com/profile.php?id=100006137019693'>I have read agreement</a>
         <button type="submit">Register</button>
       </form>
     </div>

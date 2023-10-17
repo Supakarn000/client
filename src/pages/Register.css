@@ -31,6 +31,21 @@
     border-radius: 20px;
     box-shadow: 15px 10px 15px rgba(0, 0, 0, 0.1);
   }
+
+  .register input:invalid[type="email"]{
+    background-color: red;
+  }
+
+ .register input:checked[type="checkbox"]{
+  width: 10px;
+  height: 10px;
+ }
+
+ .register input[type="checkbox"]{
+  margin-left: 35%;
+ }
+  
+
   
   .register button[type="submit"] {
     width: 100%;
