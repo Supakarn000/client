@@ -20,7 +20,7 @@ const Register = () => {
   };
 
   const handleCheck = () => {
-    setCheck({True})
+    setCheck(true)
   }
 
   const handleSubmit = async (e) => {
