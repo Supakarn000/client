@@ -21,10 +21,21 @@ const TypePage = ({ productType }) => {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', import.meta.env.VITE_API + `/products?type=${productType}`, true);
             xhr.onreadystatechange = function () {
-                const data = JSON.parse(xhr.responseText);
-                setProducts(data);
-                setFilterProducts(data);
-                setLoading(false);
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        const responseText = xhr.responseText;
+                        if (responseText) {
+                            const data = JSON.parse(responseText);
+                            setProducts(data);
+                            setFilterProducts(data);
+                            setLoading(false);
+                        } else {
+                            console.error('error');
+                        }
+                    } else {
+                        console.error('error');
+                    }
+                }
             };
             xhr.send();
         };
@@ -48,7 +59,7 @@ const TypePage = ({ productType }) => {
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
             navigate('/cart');
         } else {
-            alert("user not login")
+            alert("User not logged in");
         }
     };
 
@@ -104,7 +115,8 @@ const TypePage = ({ productType }) => {
             </div>
         ));
     };
-    //main return
+
+    // Main return
     return (
         <div>
             <Navbar />

@@ -9,6 +9,8 @@ const Product = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterProducts, setFilterProducts] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(8);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +37,14 @@ const Product = () => {
 
         fetchAllProducts();
     }, []);
+
+    useEffect(() => {
+        const indexOfLastItem = currentPage * itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+        const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+
+        setFilterProducts(currentProducts);
+    }, [currentPage, products, itemsPerPage]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -65,6 +75,10 @@ const Product = () => {
     const handleMouseLeave = (productID) => {
         const card = document.getElementById(`productCard${productID}`);
         card.style.backgroundColor = '';
+    };
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
     };
 
     return (
@@ -137,6 +151,20 @@ const Product = () => {
                             </div>
                         </div>
                     ))}
+                    <nav aria-label="Page navigation" className="custom-pagination">
+                    <ul className="pagination justify-content-center">
+                        {Array.from({ length: Math.ceil(products.length / itemsPerPage) }, (_, i) => (
+                            <li key={i} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
+                                <button
+                                    className="page-link"
+                                    onClick={() => handlePageChange(i + 1)}
+                                >
+                                    {i + 1}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
                 </div>
             </div>
         </div>
