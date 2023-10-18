@@ -3,15 +3,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Navbar = () => {
     const isLoggedIn = Cookies.get("userID") !== undefined;
     const username = Cookies.get("username");
+    const isAdmin = Cookies.get("isAdmin") === "1";
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         Cookies.remove("userID");
         Cookies.remove("username");
+        Cookies.remove("isAdmin");
         localStorage.removeItem("token");
         localStorage.removeItem("username");
         localStorage.removeItem("cartItems");
@@ -29,9 +33,13 @@ const Navbar = () => {
     const handleTipclick = () => {
         const tipclick = document.getElementById("tip");
         if (tipclick) {
-          tipclick.textContent = "Login to order products!!";
+            tipclick.textContent = "Login to order products!!";
         }
     };
+
+    const Adminpanel = () => {
+        navigate('/add');
+    }
 
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
@@ -96,17 +104,27 @@ const Navbar = () => {
                             </a>
                         </li>
                     )}
+                    <li className="nav-item">
+                        <a
+                            className="nav-link"
+                            id='tip'
+                            onMouseEnter={handleTextMouseEnter}
+                            onMouseLeave={handleTextMouseLeave}
+                            onClick={handleTipclick}
+                        >
+                            Tip to buy Product
+                        </a>
+                    </li>
+
+                    {isAdmin && (
                         <li className="nav-item">
-                            <a
-                                className="nav-link"
-                                id='tip'
+                            <a className="nav-link" onClick={Adminpanel}
                                 onMouseEnter={handleTextMouseEnter}
-                                onMouseLeave={handleTextMouseLeave}
-                                onClick={handleTipclick}
-                            >
-                                Tip to buy Product
+                                onMouseLeave={handleTextMouseLeave}>
+                                ADMIN PANAL
                             </a>
                         </li>
+                    )}
                 </ul>
 
                 {isLoggedIn && (

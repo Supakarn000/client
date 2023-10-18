@@ -8,6 +8,7 @@ import TypePage from './pages/TypePage'
 import Profile from './pages/Profile'
 import Cart from './pages/CartPage'
 import Data from './component/data'
+import Add from './admin/add'
 
 
 
@@ -29,6 +30,7 @@ function App() {
           <Route path="/other"element={<TypePage productType="other" />}/>
           <Route path="/cart"element={<Cart/>}/>
           <Route path="/data"element={<Data/>}/>
+          <Route path="/add"element={<Add/>}/>
 
         </Routes>
       </BrowserRouter>

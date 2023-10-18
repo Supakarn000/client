@@ -19,15 +19,18 @@ const Login = () => {
         xhr.onload = function () {
             if (xhr.status === 200) {
                 const data = JSON.parse(xhr.responseText);
-
+                
+                console.log("Received data:", data);
                 const userId = data.userId;
                 const token = data.token;
+                const isAdmin = data.isAdmin;
 
                 localStorage.setItem("token", token);
                 localStorage.setItem("username", username);
                 console.log(data);
                 Cookies.set("userID", userId, { expires: 7 });
                 Cookies.set("username", username);
+                Cookies.set("isAdmin", isAdmin);
 
                 navigate('/');
             } else {
