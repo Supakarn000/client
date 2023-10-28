@@ -144,7 +144,7 @@ const Profile = () => {
                             <li key={order.orderID} className="order-item">
                                 <strong>Order ID:</strong> {order.orderID}<br />
                                 <strong>Date:</strong> {order.orderDate}<br />
-                                <strong>Total:</strong> ${order.totalPrice}<br />
+                                <strong>Total:</strong> ฿{order.totalPrice}<br />
                                 <strong>Order Details:</strong>
                                 {order.cartItems.map(renderhistory)}
                             </li>

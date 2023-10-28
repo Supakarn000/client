@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Product = () => {
-    const [products, setProducts] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
     const [filterProducts, setFilterProducts] = useState([]);
+    const [countproducts, setCountproducts] = useState([]);
+    const [searchQuery, setSearchQuery] = useState('');
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(8);
@@ -25,7 +25,7 @@ const Product = () => {
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     const data = JSON.parse(xhr.responseText);
-                    setProducts(data);
+                    setCountproducts(data);
                     setFilterProducts(data);
                 } else {
                     console.error(`${xhr.status}`);
@@ -41,16 +41,16 @@ const Product = () => {
     useEffect(() => {
         const indexOfLastItem = currentPage * itemsPerPage;
         const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        const currentProducts = products.slice(indexOfFirstItem, indexOfLastItem);
+        const currentProducts = countproducts.slice(indexOfFirstItem, indexOfLastItem);
 
         setFilterProducts(currentProducts);
-    }, [currentPage, products, itemsPerPage]);
+    }, [currentPage, countproducts, itemsPerPage]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
 
-        const filtered = products.filter((product) =>
+        const filtered = countproducts.filter((product) =>
             product.name.toLowerCase().includes(query.toLowerCase())
         );
         setFilterProducts(filtered);
@@ -153,7 +153,7 @@ const Product = () => {
                     ))}
                     <nav aria-label="Page navigation" className="custom-pagination">
                     <ul className="pagination justify-content-center">
-                        {Array.from({ length: Math.ceil(products.length / itemsPerPage) }, (_, i) => (
+                        {Array.from({ length: Math.ceil(countproducts.length / itemsPerPage) }, (_, i) => (
                             <li key={i} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
                                 <button
                                     className="page-link"
