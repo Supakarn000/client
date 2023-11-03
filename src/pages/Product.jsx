@@ -5,18 +5,18 @@ import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
 const Product = () => {
-    const [filterProducts, setFilterProducts] = useState([]);
+    const [getproducts, setGetproducts] = useState([]);
     const [countproducts, setCountproducts] = useState([]);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [search, setSearch] = useState('');
+    const [islogin, setIslogin] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(8);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        //const token = localStorage.getItem('token');
         const cookie = Cookies.get('userID');
-        setIsLoggedIn(!!cookie);
+        setIslogin(!!cookie);
 
         const fetchAllProducts = async () => {
             const xhr = new XMLHttpRequest();
@@ -26,7 +26,7 @@ const Product = () => {
                 if (xhr.status === 200) {
                     const data = JSON.parse(xhr.responseText);
                     setCountproducts(data);
-                    setFilterProducts(data);
+                    setGetproducts(data);
                 } else {
                     console.error(`${xhr.status}`);
                 }
@@ -39,25 +39,35 @@ const Product = () => {
     }, []);
 
     useEffect(() => {
-        const indexOfLastItem = currentPage * itemsPerPage;
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        const currentProducts = countproducts.slice(indexOfFirstItem, indexOfLastItem);
+        const last = currentPage * itemsPerPage;
+        const first = last - itemsPerPage;
+        const currentProducts = countproducts.slice(first, last);
 
-        setFilterProducts(currentProducts);
+        setGetproducts(currentProducts);
     }, [currentPage, countproducts, itemsPerPage]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
-        setSearchQuery(query);
-
-        const filtered = countproducts.filter((product) =>
-            product.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilterProducts(filtered);
+        setSearch(query);
+    
+        fetch(import.meta.env.VITE_API + `/products/search?query=${query}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`${response.status}`);
+                }
+            })
+            .then((data) => {
+                setGetproducts(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     const handleOrderClick = (product) => {
-        if (isLoggedIn) {
+        if (islogin) {
             const existingCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
             const updatedCartItems = [...existingCartItems, product];
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
@@ -90,12 +100,12 @@ const Product = () => {
                         type="text"
                         className="form-control"
                         placeholder="Search by product name"
-                        value={searchQuery}
+                        value={search}
                         onChange={handleSearchChange}
                     />
                 </div>
                 <div className="row row-cols-1 row-cols-md-4 g-4">
-                    {filterProducts.map((product) => (
+                    {getproducts.map((product) => (
                         <div
                             className="col"
                             key={product.productID}
@@ -121,7 +131,7 @@ const Product = () => {
                                         className="btn btn-dark"
                                         data-bs-toggle="modal"
                                         data-bs-target={`#orderModal${product.productID}`}
-                                        disabled={!isLoggedIn}>Order</button>
+                                        disabled={!islogin}>Order</button>
 
                                     <div className="modal fade" id={`orderModal${product.productID}`} tabIndex="-1" aria-labelledby={`orderModalLabel${product.productID}`} aria-hidden="true">
                                         <div className="modal-dialog modal-dialog-centered">

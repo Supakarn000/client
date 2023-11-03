@@ -80,11 +80,7 @@ const Cart = () => {
                             {cartItems.map((product, index) => (
                                 <li key={index} className="cart-item">
                                     {product.image && (
-                                        <img
-                                            src={product.image}
-                                            alt={product.name}
-                                            className="cart-item-image"
-                                        />
+                                        <img src={product.image} alt={product.name} className="cart-item-image"/>
                                     )}
                                     <div className="cart-item-details">
                                         <p>{product.name}</p>

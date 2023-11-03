@@ -8,7 +8,7 @@ const TypePage = ({ productType }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState('');
-    const [filterProducts, setFilterProducts] = useState([]);
+    const [getproducts, setGetproducts] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const navigate = useNavigate();
 
@@ -27,7 +27,7 @@ const TypePage = ({ productType }) => {
                         if (responseText) {
                             const data = JSON.parse(responseText);
                             setProducts(data);
-                            setFilterProducts(data);
+                            setGetproducts(data);
                             setLoading(false);
                         } else {
                             console.error('error');
@@ -46,10 +46,21 @@ const TypePage = ({ productType }) => {
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setSearch(query);
-        const filter = products.filter((product) =>
-            product.name.toLowerCase().includes(query.toLowerCase())
-        );
-        setFilterProducts(filter);
+    
+        fetch(import.meta.env.VITE_API + `/products/search?query=${query}`)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.json();
+                } else {
+                    throw new Error(`${response.status}`);
+                }
+            })
+            .then((data) => {
+                setGetproducts(data);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     };
 
     const handleOrderClick = (product) => {
@@ -68,11 +79,11 @@ const TypePage = ({ productType }) => {
             return <p>Loading</p>;
         }
 
-        if (filterProducts.length === 0) {
+        if (getproducts.length === 0) {
             return <p>No products found</p>;
         }
 
-        return filterProducts.map((product) => (
+        return getproducts.map((product) => (
             <div className="col" key={product.productID}>
                 <div className="card h-100">
                     {product.image && (
