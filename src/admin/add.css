@@ -1,0 +1,13 @@
+.main-form{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.del-form{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 50px;
+}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "../component/navbar";
+import "./add.css";
 
 const Add = () => {
     const [product, setProduct] = useState({
@@ -95,7 +96,8 @@ const Add = () => {
         <div>
             <Navbar />
             <h1>All product in database is {productCount} products</h1>
-            <form onSubmit={handleSubmit}>
+            <h2 style={{textAlign: "center"}}>Add Product Form</h2>
+            <form onSubmit={handleSubmit} className="main-form">
                 <input type="text" name="name" placeholder="Product Name" value={product.name} onChange={handleChange}/><br/>
                 <input type="text" name="image" placeholder="Image URL" value={product.image} onChange={handleChange}/><br/>
                 <textarea name="description" placeholder="Description" value={product.description} onChange={handleChange}/><br/>
@@ -105,7 +107,8 @@ const Add = () => {
                 <button type="submit">Add Product</button>
             </form>
             <br/>
-            <form onSubmit={handleDelete}>
+            <h2 style={{textAlign: "center"}}>Delete Product Form</h2>
+            <form onSubmit={handleDelete} className="del-form">
                 <input type="text" name="productId" placeholder="Product ID" value={productId} onChange={handleIdChange} /><br/>
                 <button type="submit">Delete Product</button>
             </form>
