@@ -41,6 +41,10 @@ const Navbar = () => {
         navigate('/add');
     }
 
+    const data = () => {
+        navigate('/data');
+    }
+
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-black sticky-top">
             <a className="navbar-brand" href="/">Home</a>
@@ -122,6 +126,15 @@ const Navbar = () => {
                                 onMouseEnter={handleTextMouseEnter}
                                 onMouseLeave={handleTextMouseLeave}>
                                 ADMIN PANAL
+                            </a>
+                        </li>
+                    )}
+                    {isAdmin && (
+                        <li className="nav-item">
+                            <a className="nav-link" onClick={data}
+                                onMouseEnter={handleTextMouseEnter}
+                                onMouseLeave={handleTextMouseLeave}>
+                                DATACHECK
                             </a>
                         </li>
                     )}
