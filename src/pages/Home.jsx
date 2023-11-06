@@ -125,7 +125,7 @@ const Home = () => {
       <Navbar />
       <div className="container">
         <header className="header" id="welcomeHeader" onClick={changeHeaderText}>
-          <h1>Welcome to MY SHOP</h1>
+          <h1 id='wel'>Welcome to MY SHOP</h1>
           <h2>Fullstock Store is Thailand’s No.1 fashion specialist store, Welcome to our Shop</h2>
           <div className="gradient-emulator"></div>
         </header>
@@ -169,7 +169,7 @@ const Home = () => {
         </section>
 
         <section className="down">
-          <h1>Best Sold Product!!</h1>
+          <h1 id="bests">Best Sold Product!!</h1>
           {bestSoldProduct && (
             <div className="card2">
               <div className="card-content">
@@ -180,7 +180,7 @@ const Home = () => {
                 <p>Has been create {bestSoldProduct.sold} sold</p>
                 <p>and it was {bestSoldProduct.instock} instock left NOW!!!</p>
                 <Link to="/product">
-                  <button className="button">Buy this</button>
+                  <button id="button">Buy this</button>
                 </Link>
               </div>
             </div>

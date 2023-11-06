@@ -150,7 +150,7 @@
   margin-right: 50px;
 }
 
-.button {
+#button {
   background-color: #3e3e3e;
   color: #fff;
   padding: 10px 20px;
@@ -160,7 +160,7 @@
   text-decoration: none;
   font-size: 16px;
 }
-.button:hover{
+#button:hover{
   background-color: rgb(137, 137, 137);
 }
 
@@ -188,6 +188,12 @@
   margin-top: 10px;
   font-size: 2rem;
   font-family: monospace;
+}
+
+#bests::first-letter{
+  font-size: 40px;
+  font-style: italic;
+  color: red;
 }
 
 @media (max-width: 600px) or (max-width: 1024px) {
