@@ -13,7 +13,6 @@ const Profile = () => {
     const [updateSuccess, setUpdateSuccess] = useState(false);
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
         const userID = Cookies.get('userID');
         //profile
         const userxhr = new XMLHttpRequest();

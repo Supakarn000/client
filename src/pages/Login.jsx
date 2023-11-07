@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { ReactSession } from 'react-client-session';
 import "./Login.css";
 import Cookies from 'js-cookie';
 
@@ -28,6 +29,8 @@ const Login = () => {
                 localStorage.setItem("token", token);
                 localStorage.setItem("username", username);
                 console.log(data);
+
+                ReactSession.set("user_id",userId);
                 Cookies.set("userID", userId, { expires: 7 });
                 Cookies.set("username", username);
                 Cookies.set("isAdmin", isAdmin);

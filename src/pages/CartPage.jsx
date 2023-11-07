@@ -28,8 +28,7 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
-
-        const cookie  = Cookies.get('userID');
+        const cookie = Cookies.get('userID');
         const requestBody = {
             userID: userID,
             cartItems: cartItems,
@@ -37,7 +36,7 @@ const Cart = () => {
         };
 
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', `${import.meta.env.VITE_API}/order` , true);
+        xhr.open('POST', `${import.meta.env.VITE_API}/order`, true);
         xhr.setRequestHeader('Content-Type', 'application/json');
         xhr.setRequestHeader('Authorization', cookie);
 
@@ -77,18 +76,25 @@ const Cart = () => {
                 ) : (
                     <div>
                         <ul>
-                            {cartItems.map((product, index) => (
-                                <li key={index} className="cart-item">
-                                    {product.image && (
-                                        <img src={product.image} alt={product.name} className="cart-item-image"/>
-                                    )}
-                                    <div className="cart-item-details">
-                                        <p>{product.name}</p>
-                                        <p>Price: {product.price} ฿</p>
-                                        <button onClick={() => removeFromCart(product)}>Remove</button>
-                                    </div>
-                                </li>
-                            ))}
+                            {(() => {
+                                const items = [];
+                                for (let index = 0; index < cartItems.length; index++) {
+                                    const product = cartItems[index];
+                                    items.push(
+                                        <li key={index} className="cart-item">
+                                            {product.image && (
+                                                <img src={product.image} alt={product.name} className="cart-item-image"/>
+                                            )}
+                                            <div className="cart-item-details">
+                                                <p>{product.name}</p>
+                                                <p>Price: {product.price} ฿</p>
+                                                <button onClick={() => removeFromCart(product)}>Remove</button>
+                                            </div>
+                                        </li>
+                                    );
+                                }
+                                return items;
+                            })()}
                         </ul>
                         <p className='total'>Total Price: {calculateTotalPrice()} ฿</p>
                         <div className='check'>

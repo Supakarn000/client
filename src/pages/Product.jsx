@@ -16,7 +16,9 @@ const Product = () => {
     useEffect(() => {
         //const token = localStorage.getItem('token');
         const cookie = Cookies.get('userID');
-        setIslogin(!!cookie);
+        if (cookie) {
+            setIslogin(true);
+          }
 
         const fetchAllProducts = async () => {
             const xhr = new XMLHttpRequest();
@@ -72,8 +74,6 @@ const Product = () => {
             const updatedCartItems = [...existingCartItems, product];
             localStorage.setItem('cartItems', JSON.stringify(updatedCartItems));
             navigate('/cart');
-        } else {
-            console.log("User is not logged in");
         }
     };
 
@@ -144,7 +144,7 @@ const Product = () => {
                                                     <img
                                                         src={product.image}
                                                         className="card-img-top img-thumbnail"
-                                                        style={{ "height": "100%", "width": "auto" }}
+                                                        style={{ "height": "30%", "width": "auto" }}
                                                         alt={product.name}
                                                     />
                                                     <p>{product.description}</p>
@@ -165,16 +165,13 @@ const Product = () => {
                     <ul className="pagination justify-content-center">
                         {Array.from({ length: Math.ceil(countproducts.length / itemsPerPage) }, (_, i) => (
                             <li key={i} className={`page-item ${i + 1 === currentPage ? 'active' : ''}`}>
-                                <button
-                                    className="page-link"
-                                    onClick={() => handlePageChange(i + 1)}
-                                >
+                                <button className="page-link"onClick={() => handlePageChange(i + 1)}>
                                     {i + 1}
                                 </button>
                             </li>
                         ))}
                     </ul>
-                </nav>
+                    </nav>
                 </div>
             </div>
         </div>

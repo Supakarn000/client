@@ -3,6 +3,7 @@ import Navbar from "../component/navbar";
 import "./add.css";
 
 const Add = () => {
+    const [productId, setProductId] = useState("");
     const [product, setProduct] = useState({
         name: "",
         image: "",
@@ -12,7 +13,6 @@ const Add = () => {
         instock: ""
     });
 
-    const [productId, setProductId] = useState("");
     const [productCount, setProductCount] = useState(0);
 
     const handleIdChange = (e) => {
@@ -28,7 +28,7 @@ const Add = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleAdd = (e) => {
         e.preventDefault();
         const xhr = new XMLHttpRequest();
 
@@ -60,7 +60,6 @@ const Add = () => {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 204) {
-                    console.log("Product deleted");
                     alert("Product deleted");
                     window.location.reload();
                 } else {
@@ -70,6 +69,27 @@ const Add = () => {
         };
 
         xhr.send();
+    };
+
+    const handleEdit = (e) => {
+        e.preventDefault();
+        const xhr = new XMLHttpRequest();
+
+        xhr.open("PUT", import.meta.env.VITE_API + `/products/update/${productId}`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    alert("Product updated");
+                    window.location.reload();
+                } else {
+                    console.error("Error:", xhr.statusText);
+                }
+            }
+        };
+
+        xhr.send(JSON.stringify(product));
     };
 
     useEffect(() => {
@@ -97,7 +117,7 @@ const Add = () => {
             <Navbar />
             <h1>All product in database is {productCount} products</h1>
             <h2 style={{textAlign: "center"}}>Add Product Form</h2>
-            <form onSubmit={handleSubmit} className="main-form">
+            <form onSubmit={handleAdd} className="main-form">
                 <input type="text" name="name" placeholder="Product Name" value={product.name} onChange={handleChange}/><br/>
                 <input type="text" name="image" placeholder="Image URL" value={product.image} onChange={handleChange}/><br/>
                 <textarea name="description" placeholder="Description" value={product.description} onChange={handleChange}/><br/>
@@ -111,6 +131,17 @@ const Add = () => {
             <form onSubmit={handleDelete} className="del-form">
                 <input type="text" name="productId" placeholder="Product ID" value={productId} onChange={handleIdChange} /><br/>
                 <button type="submit">Delete Product</button>
+            </form><br/>
+            <h2 style={{ textAlign: "center" }}>Update Product Form</h2>
+            <form onSubmit={handleEdit} className="main-form">
+                <input type="text" name="name" placeholder="Product Name" value={product.name} onChange={handleChange} /><br />
+                <input type="text" name="image" placeholder="Image URL" value={product.image} onChange={handleChange} /><br />
+                <textarea name="description" placeholder="Description" value={product.description} onChange={handleChange} /><br />
+                <input type="text" name="type" placeholder="Type" value={product.type} onChange={handleChange} /><br />
+                <input type="number" name="price" placeholder="Price" value={product.price} onChange={handleChange} /><br />
+                <input type="number" name="instock" placeholder="In Stock" value={product.instock} onChange={handleChange} /><br />
+                <input type="text" name="productId" placeholder="Product ID" value={productId} onChange={handleIdChange} /><br />
+                <button type="submit">Update Product</button>
             </form>
         </div>
     );
